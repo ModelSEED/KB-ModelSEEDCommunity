@@ -1,0 +1,197 @@
+#
+# Define basic display information
+#
+name     : Community Flux Balance Analysis
+
+tooltip  : |
+    Predict fluxes in a community model on a given media using flux balance analysis (FBA).
+
+screenshots : []
+
+#
+# Define the set of other narrative methods that should be suggested to the user.
+#
+suggestions :
+    apps:
+        related :
+            []
+        next :
+            []
+    methods:
+        related :
+            []
+        next :
+            []
+
+#
+# Configure the display and description of the parameters
+#
+parameters :
+    community_model_ref :
+        ui-name : |
+            Community model
+        short-hint : |
+            The community model consisting of genome-wide set of stoichiometric reactions, compounds, and the weighted components of the biomass on which you wish to carry out Flux Balance Analysis (FBA). This model can be built using the “Build Metabolic Model” App.
+        placeholder : |
+            Model for FBA
+
+    media_id :
+        ui-name : |
+            Media (defaults to Complete media)
+        short-hint : |
+            Media specifies the set of chemical compounds the community can use for its growth. If left blank, the default Complete media is used. The “Complete” media is an abstraction of what is available in our biochemistry database. Every compound that can be transported from the extracellular compartment into the cell–or, in other words, for which a transport reaction is available–is used in the Complete media. This list is built in real-time, meaning that whenever you run FBA with Complete media, the available transporters are parsed from the media database–and is therefore not stored permanently in any media object in the workspace.
+        placeholder : |
+            Growth condition for community FBA
+
+    target_reaction :
+        ui-name : |
+            Reaction to maximize
+        short-hint : |
+            ID of reaction flux to maximize in FBA. Only one reaction can be selected. First you must deselect the default reaction ‘bio1’ and then select the desired target reaction to maximize. You may use the search box to search through the available reactions in your model.
+
+    fba_output_id :
+        ui-name : |
+            Output Community FBA Result
+        short-hint : |
+            The fluxes for all reactions in the community model and the predicted growth of biomass according to the FBA model.
+        placeholder : |
+            ID for saving FBA results
+
+    prfba :
+        ui-name : |
+            Probabilistic FBA
+        short-hint : |
+            Minimize all reactions weighted by probablity assigned to the reactions
+
+    reaction_ko_list :
+        ui-name : |
+            Reaction Knockouts
+        short-hint : |
+            Specify reaction knockouts here to prevent flux through specific reactions during the simulation.
+
+    expression_ref :
+        ui-name : |
+            Expression data set
+        short-hint : |
+            An imported ExpressionMatrix containing gene expression values, one condition (column) of which will be used to constrain reaction activity in FBA.
+
+    expression_condition :
+        ui-name : |
+            Expression condition
+        short-hint : |
+            Select the single specific condition in the expression matrix to which reaction activity in the FBA should be fit.
+
+    objective_fraction :
+        ui-name : |
+            Objective activation coefficient
+        short-hint : |
+            What fraction of the optimal objective value should FBA be constrained at? Values must be between 0 and 1.
+    
+    expression_coef :
+        ui-name : |
+            Expression coefficient
+        short-hint : |
+            Coefficient to use in expression terms of objective function
+
+    kinetics_coef :
+        ui-name : |
+            Kinetics coefficient
+        short-hint : |
+            Coefficient to use constrain species flux based on species abundance
+
+    exchange_coef :
+        ui-name : |
+            Exchange coefficient
+        short-hint : |
+            Coefficient to use to constrain exchange of metabolites with the environment
+            
+    abundances :
+        ui-name : |
+            Abundances
+        short-hint : |
+            Species abundances to use in simulation
+
+    max_c_uptake :
+        ui-name : |
+            Max carbon uptake
+        short-hint : |
+            Maximum number of total moles of carbon permitted for uptake (default uptake rates vary from 0 to 100 for all nutrients).
+
+
+    max_s_uptake :
+        ui-name : |
+            Max sulfur uptake
+        short-hint : |
+            Maximum number of total moles of sulfur permitted for uptake (default uptake rates vary from 0 to 100 for all nutrients).
+
+
+    max_p_uptake :
+        ui-name : |
+            Max phosphate uptake
+        short-hint : |
+            Maximum number of total moles of phosphate permitted for uptake (default uptake rates vary from 0 to 100 for all nutrients).
+
+    max_o_uptake :
+        ui-name : |
+            Max oxygen uptake
+        short-hint : |
+            Maximum number of total moles of oxygen permitted for uptake (default uptake rates vary from 0 to 100 for all nutrients).
+
+    max_n_uptake :
+        ui-name : |
+            Max nitrogen uptake
+        short-hint : |
+            Maximum number of total moles of nitrogen permitted for uptake (default uptake rates vary from 0 to 100 for all nutrients).
+
+icon: fba-teal.png
+
+description : |
+
+    <p>This App constructs a model of how metabolites flow through the metabolic network of a microbe or a plant. Flux Balance Analysis (FBA) is a constraint-based approach that estimates growth-optimal fluxes through all reactions in the metabolic network, thereby making it possible to estimate the growth rate of an organism (the rate of biomass production) or the rate of production of a given metabolic output on a specified media.This App allows you to analyze the organism's growth on different substrates and to evaluate the reactions and metabolites that carry fluxes in each growth condition.</p>
+
+    <p>The <i>Run Flux Balance Analysis</i> App takes a metabolic model and a media formulation as input. In KBase, an “FBAModel” or “Metabolic Model typed object” contains the reactions, compounds, compartments, biomass reactions, and gene associations that comprise a metabolic model. Such models can be built by other KBase Apps, like the <a href=”https://narrative.kbase.us/#catalog/apps/fba_tools/build_metabolic_model/”>Build Metabolic Model</a> App. </p>
+
+    <p>The “media formulation,” or <a href=”https://narrative.kbase.us/#spec/type/KBaseBiochem.Media”>“Media typed object,”</a>  contains the chemical compounds on which to analyze the growth of your organism. KBase provides users with more than 500 commonly used media conditions to use when running FBA. Importing a media formulation into your Narrative is discussed in Step 1 of the point and click instructions below.</p>
+
+    <p>KBase offers several ways to load metabolic models into your Narrative so that they can be used as one of the required inputs for this and other Apps:
+    <ol>
+      <li>Upload your own data in either SBML (systems biology markup language) or TSV (tab-separated values) format from your local machine. See the <a href=”http://kbase.us/data-upload-download-guide/fba-model/”>FBA Model section of the Data Upload and Download Guide</a> for instructions.</li>
+      <li>Search for and add to your Narrative an FBA model from KBase’s reference data collection.</li>
+      <li>Use example data from the Data Browser slideout.</li>
+      <li>Use an FBA model that you worked with in another Narrative or that another user has shared with you.</li>
+    </ol>
+    </p>
+
+    <p>For more help with running FBA, check out this <a href="http://kbase.us/run-flux-balance-analysis-method/" target="_blank">Narrative Tutorial</a>.</p>
+
+    <p><strong>Reactions to Maximize</strong><br>By default, the App is attempting to maximize the biomass function or the total growth rate on the selected media. If instead you want to maximize the flux through a particular reaction, then you may use the “Reaction to maximize” parameter. This allows you to select one or more reactions from your model to maximize the amount of flux driven through while still allowing for growth. You may select multiple reactions, and they may be part of the same pathway or independent of each other.</p>
+
+    <p><strong>Expression Data</strong><br>The App allows you to run the model of the organism on the specified media with the reactions turned on or off according to expression data. First, start by selecting an expression data set from your data panel and then selecting a single expression condition from within it. Then set a threshold for allowing the genes to be turned on and off. The percent of genes at the top of the expression list above this threshold will be set to ON, and the percent of genes at the bottom of the expression list below this threshold will be set to OFF.</p>
+
+    <p><strong>Output</strong><br>Once the FBA finishes running, information on the flux distribution is displayed in an output table with six tabs:
+    <ul>
+      <li><u>Overview:</u> this tab displays summary information such as the objective value (growth of the model), which is important because it represents the maximum achievable flux through the biomass reaction of the metabolic model. An objective value of 0 or something very close to 0 means that the model did not grow on the specified media. This tab also lists other information, including the genome, media formulation, number of reactions, and number of compounds associated with the FBA.</li>
+      <li><u>Reaction fluxes:</u> this tab displays the numerical flux values, minimum and maximum flux bounds, biochemical equations, and associated genes for each reaction in the model. This information represents the fluxes through all internal reactions that allow for growth and byproduct creation. These fluxes can be further broken down into biological pathways of interest (see Pathways tab). A user may ask, for example, “How much fatty acid is being produced?” or “What are the high flux reactions or pathways?”</li>
+      <li><u>Exchange fluxes:</u> this tab displays exchange fluxes that describe the rates at which nutrients are taken in and byproducts are secreted. Positive exchange flux values represent the uptake of compounds, and negative exchange flux values represent the excretion of compounds.</li>
+      <li><u>Genes:</u> this tab displays the gene knockout information, if any. When using a wildtype strain, no gene knockout information will be available to display.</li>
+      <li><u>Biomass:</u> this tab displays the biomass composition of the model. Typically, biomass is represented in the model as an equation where biomass compounds and ATP would make 1 gram of biomass. After clicking on the Biomass tab, the coefficients of each biomass component are listed in the Coefficient column. Negative coefficients represent the compounds on the left side of the biomass equation, and positive coefficients represent the compounds on the right side of the equation.</li>
+      <li><u>Pathways:</u> this tab displays KEGG maps that represent the metabolic network of the model. Click on the name of a map (e.g., TCA cycle) to see the presence or absence of reactions (blue) and fluxes (positive fluxes are shades of red; negative fluxes are shades of green).</li>
+    </ul>
+    </p>
+
+    <p>For additional information about metabolic modeling, visit the <a href="https://kbase.us/metabolic-modeling-faq/">Metabolic Modeling in KBase FAQ</a>.<p>
+
+    <p><strong>Team members who developed & deployed algorithm in KBase:</strong>
+    Chris Henry, Janaka Edirisinghe, Sam Seaver, and Neal Conrad. For questions, please <a href="https://www.kbase.us/support/">contact us</a>.</p>
+
+
+publications :
+    -
+        pmid: 20802497
+        display-text: |
+            Henry CS, DeJongh M, Best AA, Frybarger PM, Linsay B, Stevens RL. High-throughput generation, optimization and analysis of genome-scale metabolic models. Nat Biotechnol. 2010;28: 977–982. doi:10.1038/nbt.1672
+        link: http://www.ncbi.nlm.nih.gov/pubmed/20802497
+    -
+        display-text: |
+             Orth JD, Thiele I, Palsson BØ. What is flux balance analysis? Nature Biotechnology. 2010;28: 245–248. doi:10.1038/nbt.1614
+        link: http://www.nature.com/nbt/journal/v28/n3/abs/nbt.1614.html
